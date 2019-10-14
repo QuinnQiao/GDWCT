@@ -357,6 +357,6 @@ def main():
     else:
         run.test()
 
-config = ges_Aonfig('configs/config.yaml')
+config = ges_Aonfig('configs/config_summer2winter.yaml')
 
 main()
