@@ -60,7 +60,10 @@ def get_loader(image_dir, crop_size=216, resize=216,
         transform.append(T.RandomHorizontalFlip())
 
     transform.append(T.Resize(resize, Image.BICUBIC))
-    transform.append(T.RandomCrop(crop_size))
+    if mode == 'train':
+        transform.append(T.RandomCrop(crop_size))
+    else:
+        transform.append(T.CenterCrop(crop_size))
 
     transform.append(T.ToTensor())
     transform.append(T.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5)))

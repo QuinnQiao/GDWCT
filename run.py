@@ -6,10 +6,12 @@ from data_loader import *
 from model import *
 import time
 import datetime
-import os
+import os, sys
 from utils.util import *
 from torch.backends import cudnn
 from scipy.linalg import block_diag
+import torchvision.utils as vutils
+from PIL import Image
 
 
 class Run(object):
@@ -341,10 +343,46 @@ class Run(object):
                 x_A = x_A.to(self.device)
                 x_B = x_B.to(self.device)
 
-                x_AB, x_BA = \
-                self.update_G(x_A, x_B, isTrain=False)
+                x_AB, x_BA = self.update_G(x_A, x_B, isTrain=False)
                 save_img([x_A, x_B, x_AB, x_BA], self.config['SAVE_NAME'], i, 'test_results')
 
+    def test_new(self, mode):
+        print('New test start')
+        self.test_ready()
+
+        blank_img = Image.open(self.config['FOR_TEST']['blank_img']).resize(self.config['RESIZE'])
+
+        data_loader = self.data_loader
+        x_A, x_B = next(data_loader) # N*3*H*W
+        x_A, x_B = x_A.to(self.device), x_B.to(self.device)
+        
+        if mode == 'A2B':
+            content = x_A
+            style = x_B
+        else:
+            content = x_B
+            style = x_A
+
+        imgs = [blank_img]
+        for i in range(content.size(0)):
+            img = (content[i].cpu().data+1)/2
+            imgs.append(img)
+
+        for j in range(style.size(0)):
+            s = style[j].unsqueeze(0)
+            img = (style[j].cpu().data+1)/2
+            imgs.append(img)
+            for i in range(content.size(0)):
+                c = content[i].unsqueeze(0)
+                img, _ = self.update_G(c, s, isTrain=False)
+                img = (img.cpu().data+1)/2
+                imgs.append(img)
+        self.save_img_new(self.config['FOR_TEST']['save_dir'], mode+'.jpg', imgs, style.size(0)+1)
+
+    def save_img_new(self, save_dir, save_name, images, num_input):
+        image_tensor = torch.cat(images, 0)
+        image_grid = vutils.make_grid(image_tensor.data, nrow=num_input, padding=0, normalize=True)
+        vutils.save_image(image_grid, os.path.join(save_dir, save_name), nrow=1)
 
 def main():
     
@@ -355,8 +393,10 @@ def main():
     if config['MODE'] == 'train':
         run.train()
     else:
-        run.test()
+        # run.test()
+        run.test_new('A2B')
+        run.test_new('B2A')
 
-config = ges_Aonfig('configs/config_summer2winter.yaml')
+config = ges_Aonfig(sys.argv[1])
 
 main()
