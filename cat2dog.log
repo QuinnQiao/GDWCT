@@ -1,0 +1,227 @@
+/home/quinn/Documents/codes/GDWCT/utils/util.py:41: YAMLLoadWarning: calling yaml.load() without Loader=... is deprecated, as the default Loader is unsafe. Please read https://msg.pyyaml.org/load for full details.
+  return yaml.load(stream)
+cuda:0
+{'GPU1': 0, 'GPU2': 1, 'DATA_PARALLEL': False, 'N_GROUP': 8, 'INPUT_DIM': 3, 'DATA_PATH': '/home/quinn/datasets/', 'DATASET': 'cat2dog', 'RESIZE': 176, 'CROP_SIZE': 176, 'NUM_ITERS': 200000, 'BATCH_SIZE': 4, 'G_LR': 0.0001, 'D_LR': 0.0001, 'BETA1': 0.5, 'BETA2': 0.999, 'WEIGHT_DECAY': 0.0001, 'NUM_ITERS_DECAY': 100000, 'LR_POLICY': 'step', 'GAMMA': 0.5, 'STEP_SIZE': 10000, 'INIT': 'kaiming', 'LAMBDA_X_REC': 10.0, 'LAMBDA_X_CYC': 10.0, 'LAMBDA_C': 1.0, 'LAMBDA_S': 1.0, 'LAMBDA_W_REG': 0.001, 'LAMBDA_C_REG': 10.0, 'G': {'FIRST_DIM': 64, 'CONTENT_DIM': 256, 'MLP_DIM': 256, 'BIAS_DIM': 256, 'N_RES_BLOCKS': 8}, 'D': {'FIRST_DIM': 64, 'NORM': 'none', 'ACTIVATION': 'lrelu', 'N_LAYER': 4, 'GAN_TYPE': 'lsgan', 'NUM_SCALES': 3, 'PAD_TYPE': 'mirror'}, 'NUM_WORKERS': 0, 'SAVE_NAME': 'ukiyoe2photo_G8', 'SAVE_EVERY': 10000, 'MODEL_SAVE_PATH': '/home/quinn/Documents/models/GDWCT/cat2dog', 'START': 0, 'LOAD_MODEL': False, 'MODE': 'train'}
+# iters: 316
+# data: 1264
+Start training ~ Ayo:)!
+=====================================================
+Elapsed [0:00:03.119931], Iter [0/200000]
+=====================================================
+D/loss: 6.01288
+G/loss_fake: 5.75207
+G/loss_cross_rec: 13.95192
+G/loss_ae_rec: 13.25682
+G/loss_latent_s: 0.28660
+G/loss_latent_c: 4.59739
+G/loss_whitening_reg: 611.93613
+G/loss_coloring_reg: 1.69499
+=====================================================
+Elapsed [2:41:04.575272], Iter [10000/200000]
+=====================================================
+D/loss: 2.06195
+G/loss_fake: 3.77633
+G/loss_cross_rec: 2.56409
+G/loss_ae_rec: 1.17634
+G/loss_latent_s: 0.03255
+G/loss_latent_c: 0.56130
+G/loss_whitening_reg: 0.00370
+G/loss_coloring_reg: 0.65674
+=====================================================
+Elapsed [5:22:18.748229], Iter [20000/200000]
+=====================================================
+D/loss: 1.54884
+G/loss_fake: 3.97525
+G/loss_cross_rec: 2.48380
+G/loss_ae_rec: 1.14388
+G/loss_latent_s: 0.02811
+G/loss_latent_c: 0.47624
+G/loss_whitening_reg: 0.00275
+G/loss_coloring_reg: 0.31226
+=====================================================
+Elapsed [8:03:18.624225], Iter [30000/200000]
+=====================================================
+D/loss: 1.12604
+G/loss_fake: 4.86158
+G/loss_cross_rec: 2.07739
+G/loss_ae_rec: 1.01098
+G/loss_latent_s: 0.03554
+G/loss_latent_c: 0.46135
+G/loss_whitening_reg: 0.00224
+G/loss_coloring_reg: 0.23516
+=====================================================
+Elapsed [10:44:19.951925], Iter [40000/200000]
+=====================================================
+D/loss: 0.99634
+G/loss_fake: 4.58028
+G/loss_cross_rec: 1.64030
+G/loss_ae_rec: 0.82043
+G/loss_latent_s: 0.03190
+G/loss_latent_c: 0.39104
+G/loss_whitening_reg: 0.00161
+G/loss_coloring_reg: 0.18554
+=====================================================
+Elapsed [13:25:21.725707], Iter [50000/200000]
+=====================================================
+D/loss: 0.73183
+G/loss_fake: 4.92052
+G/loss_cross_rec: 2.08399
+G/loss_ae_rec: 0.88742
+G/loss_latent_s: 0.02691
+G/loss_latent_c: 0.38475
+G/loss_whitening_reg: 0.00133
+G/loss_coloring_reg: 0.15880
+=====================================================
+Elapsed [16:06:29.692197], Iter [60000/200000]
+=====================================================
+D/loss: 0.82344
+G/loss_fake: 5.17298
+G/loss_cross_rec: 1.61256
+G/loss_ae_rec: 0.84384
+G/loss_latent_s: 0.01773
+G/loss_latent_c: 0.33589
+G/loss_whitening_reg: 0.00112
+G/loss_coloring_reg: 0.14144
+=====================================================
+Elapsed [18:47:46.686606], Iter [70000/200000]
+=====================================================
+D/loss: 0.51347
+G/loss_fake: 5.58842
+G/loss_cross_rec: 1.91454
+G/loss_ae_rec: 0.91445
+G/loss_latent_s: 0.02291
+G/loss_latent_c: 0.32179
+G/loss_whitening_reg: 0.00057
+G/loss_coloring_reg: 0.12113
+=====================================================
+Elapsed [21:28:58.712513], Iter [80000/200000]
+=====================================================
+D/loss: 0.60113
+G/loss_fake: 5.44252
+G/loss_cross_rec: 1.55658
+G/loss_ae_rec: 0.90310
+G/loss_latent_s: 0.01807
+G/loss_latent_c: 0.29382
+G/loss_whitening_reg: 0.00046
+G/loss_coloring_reg: 0.10565
+=====================================================
+Elapsed [1 day, 0:10:15.629808], Iter [90000/200000]
+=====================================================
+D/loss: 0.70061
+G/loss_fake: 5.35161
+G/loss_cross_rec: 1.27813
+G/loss_ae_rec: 0.66851
+G/loss_latent_s: 0.01611
+G/loss_latent_c: 0.26080
+G/loss_whitening_reg: 0.00034
+G/loss_coloring_reg: 0.09898
+=====================================================
+Elapsed [1 day, 2:51:21.603694], Iter [100000/200000]
+=====================================================
+D/loss: 0.51168
+G/loss_fake: 5.33022
+G/loss_cross_rec: 1.30168
+G/loss_ae_rec: 0.67592
+G/loss_latent_s: 0.01603
+G/loss_latent_c: 0.24333
+G/loss_whitening_reg: 0.00019
+G/loss_coloring_reg: 0.08362
+=====================================================
+Elapsed [1 day, 5:32:03.973108], Iter [110000/200000]
+=====================================================
+D/loss: 0.44868
+G/loss_fake: 5.62081
+G/loss_cross_rec: 1.15720
+G/loss_ae_rec: 0.56347
+G/loss_latent_s: 0.01798
+G/loss_latent_c: 0.22072
+G/loss_whitening_reg: 0.00015
+G/loss_coloring_reg: 0.07612
+=====================================================
+Elapsed [1 day, 8:13:13.214623], Iter [120000/200000]
+=====================================================
+D/loss: 0.48007
+G/loss_fake: 5.37279
+G/loss_cross_rec: 1.13878
+G/loss_ae_rec: 0.59852
+G/loss_latent_s: 0.01056
+G/loss_latent_c: 0.19605
+G/loss_whitening_reg: 0.00010
+G/loss_coloring_reg: 0.06235
+=====================================================
+Elapsed [1 day, 10:54:17.964362], Iter [130000/200000]
+=====================================================
+D/loss: 0.43433
+G/loss_fake: 5.44066
+G/loss_cross_rec: 1.02843
+G/loss_ae_rec: 0.43724
+G/loss_latent_s: 0.00900
+G/loss_latent_c: 0.18572
+G/loss_whitening_reg: 0.00009
+G/loss_coloring_reg: 0.05779
+=====================================================
+Elapsed [1 day, 13:35:12.530125], Iter [140000/200000]
+=====================================================
+D/loss: 0.42598
+G/loss_fake: 5.38493
+G/loss_cross_rec: 1.12234
+G/loss_ae_rec: 0.52385
+G/loss_latent_s: 0.01151
+G/loss_latent_c: 0.18192
+G/loss_whitening_reg: 0.00008
+G/loss_coloring_reg: 0.05487
+=====================================================
+Elapsed [1 day, 16:16:13.765455], Iter [150000/200000]
+=====================================================
+D/loss: 0.27130
+G/loss_fake: 5.54048
+G/loss_cross_rec: 1.27323
+G/loss_ae_rec: 0.67849
+G/loss_latent_s: 0.01419
+G/loss_latent_c: 0.19088
+G/loss_whitening_reg: 0.00009
+G/loss_coloring_reg: 0.05555
+=====================================================
+Elapsed [1 day, 18:57:18.942719], Iter [160000/200000]
+=====================================================
+D/loss: 0.33824
+G/loss_fake: 5.40046
+G/loss_cross_rec: 0.96303
+G/loss_ae_rec: 0.49484
+G/loss_latent_s: 0.00857
+G/loss_latent_c: 0.17573
+G/loss_whitening_reg: 0.00007
+G/loss_coloring_reg: 0.05323
+=====================================================
+Elapsed [1 day, 21:38:20.928228], Iter [170000/200000]
+=====================================================
+D/loss: 0.29948
+G/loss_fake: 5.57193
+G/loss_cross_rec: 0.94058
+G/loss_ae_rec: 0.43691
+G/loss_latent_s: 0.00916
+G/loss_latent_c: 0.16723
+G/loss_whitening_reg: 0.00008
+G/loss_coloring_reg: 0.05119
+=====================================================
+Elapsed [2 days, 0:19:18.557459], Iter [180000/200000]
+=====================================================
+D/loss: 0.36540
+G/loss_fake: 5.31495
+G/loss_cross_rec: 1.03098
+G/loss_ae_rec: 0.49935
+G/loss_latent_s: 0.00727
+G/loss_latent_c: 0.17728
+G/loss_whitening_reg: 0.00007
+G/loss_coloring_reg: 0.05108
+=====================================================
+Elapsed [2 days, 3:00:30.508858], Iter [190000/200000]
+=====================================================
+D/loss: 0.38538
+G/loss_fake: 5.34690
+G/loss_cross_rec: 1.02179
+G/loss_ae_rec: 0.50102
+G/loss_latent_s: 0.00710
+G/loss_latent_c: 0.17638
+G/loss_whitening_reg: 0.00007
+G/loss_coloring_reg: 0.05063

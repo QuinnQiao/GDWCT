@@ -1,11 +1,5 @@
-/*
-/*/
+*/**/__pycache__
+*.pyc
 
-!.gitignore
-!data_loader.py
-!model.py
-!run.py
-!download.sh
-
-!configs/
-!utils/
+nohup.out
+train_results

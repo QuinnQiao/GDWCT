@@ -38,7 +38,10 @@ class UnalignedDataset(data.Dataset):
     def __getitem__(self, index):
         A_path = self.A_paths[index % self.A_size]
 
-        index_B = random.randint(0, self.B_size - 1)
+        if self.mode == 'train':
+            index_B = random.randint(0, self.B_size - 1)
+        else:
+            index_B = index % self.B_size
         B_path = self.B_paths[index_B]
 
         A_img = Image.open(A_path).convert('RGB')

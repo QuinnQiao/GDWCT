@@ -13,7 +13,7 @@ CROP_SIZE: 256 # 216
 
 # TRAINING SETTINGS
 NUM_ITERS: 200000 # Artworks dataset: 200000 / CelebA dataset: 500000
-BATCH_SIZE: 4
+BATCH_SIZE: 7
 G_LR: 0.0001
 D_LR: 0.0001
 BETA1: 0.5
@@ -58,9 +58,9 @@ MODEL_SAVE_PATH: /home/quinn/Documents/models/GDWCT/summer2winter # models/
 ### Required to be altered when MODE is changed.
 START: 380000 # Start iterations. This is also used in designating an trained-iteration of a loaded model.
 LOAD_MODEL: True # Set true if model parameters are not trained from scratch.
-MODE: test # Set 'train' or 'test'. Note that LOAD_MODEL option needs to be True in the 'test' mode.
+MODE: valid # Set 'train' or 'test'. Note that LOAD_MODEL option needs to be True in the 'test' mode.
 
 FOR_TEST:
-  blank_img: xxx
-  save_dir: xxx
+  blank_img: /home/quinn/datasets/blank.jpg
+  save_dir: /home/quinn/Documents/models/GDWCT/summer2winter/test_results
   

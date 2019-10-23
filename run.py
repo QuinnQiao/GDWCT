@@ -11,6 +11,7 @@ from utils.util import *
 from torch.backends import cudnn
 from scipy.linalg import block_diag
 import torchvision.utils as vutils
+import torchvision.transforms as T
 from PIL import Image
 
 
@@ -350,31 +351,43 @@ class Run(object):
         print('New test start')
         self.test_ready()
 
-        blank_img = Image.open(self.config['FOR_TEST']['blank_img']).resize(self.config['RESIZE'])
+        blank_img = Image.open(self.config['FOR_TEST']['blank_img'])
+        blank_img = blank_img.resize((self.config['RESIZE'], self.config['RESIZE']))
+        to_tensor = T.ToTensor()
+        blank_img = to_tensor(blank_img).unsqueeze(0)
 
         data_loader = self.data_loader
-        x_A, x_B = next(data_loader) # N*3*H*W
-        x_A, x_B = x_A.to(self.device), x_B.to(self.device)
+
+        for i, (x_A, x_B) in enumerate(data_loader):
+
+            x_A = x_A.to(self.device)
+            x_B = x_B.to(self.device)
+            break
         
         if mode == 'A2B':
             content = x_A
             style = x_B
-        else:
+        elif mode == 'B2A':
             content = x_B
             style = x_A
+        else:
+            assert 0, 'Unknown mode'
 
         imgs = [blank_img]
         for i in range(content.size(0)):
-            img = (content[i].cpu().data+1)/2
+            img = (content[i].unsqueeze(0).cpu().data+1)/2
             imgs.append(img)
 
         for j in range(style.size(0)):
             s = style[j].unsqueeze(0)
-            img = (style[j].cpu().data+1)/2
+            img = (s.cpu().data+1)/2
             imgs.append(img)
             for i in range(content.size(0)):
                 c = content[i].unsqueeze(0)
-                img, _ = self.update_G(c, s, isTrain=False)
+                if mode == 'A2B':
+                    img, _ = self.update_G(c, s, isTrain=False)
+                else:
+                    _, img = self.update_G(s, c, isTrain=False)
                 img = (img.cpu().data+1)/2
                 imgs.append(img)
         self.save_img_new(self.config['FOR_TEST']['save_dir'], mode+'.jpg', imgs, style.size(0)+1)
@@ -382,7 +395,10 @@ class Run(object):
     def save_img_new(self, save_dir, save_name, images, num_input):
         image_tensor = torch.cat(images, 0)
         image_grid = vutils.make_grid(image_tensor.data, nrow=num_input, padding=0, normalize=True)
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
         vutils.save_image(image_grid, os.path.join(save_dir, save_name), nrow=1)
+        
 
 def main():
     
