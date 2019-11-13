@@ -1,5 +1,5 @@
 # GPU SETTINGS
-GPU1: 0
+GPU1: 1
 GPU2: 1 # Not used if DATA_PARALLEL is False.
 DATA_PARALLEL: False
 N_GROUP: 8 # The number of groups
@@ -13,7 +13,7 @@ CROP_SIZE: 176 # 216
 
 # TRAINING SETTINGS
 NUM_ITERS: 200000 # Artworks dataset: 200000 / CelebA dataset: 500000
-BATCH_SIZE: 5
+BATCH_SIZE: 2
 G_LR: 0.0001
 D_LR: 0.0001
 BETA1: 0.5
@@ -51,15 +51,16 @@ D:
 
 # ETC
 NUM_WORKERS: 0
-SAVE_NAME: cat2dog_G8 # ukiyoe2photo_G8
+SAVE_NAME: cat2dog_G8_new # ukiyoe2photo_G8
 SAVE_EVERY: 10000
-MODEL_SAVE_PATH: /home/quinn/Documents/models/GDWCT/cat2dog # models/
+MODEL_SAVE_PATH: /home/quinn/Documents/models/GDWCT/cat2dog_new # models/
 
 ### Required to be altered when MODE is changed.
-START: 190000 # Start iterations. This is also used in designating an trained-iteration of a loaded model.
-LOAD_MODEL: True # Set true if model parameters are not trained from scratch.
-MODE: valid # Set 'train' or 'test'. Note that LOAD_MODEL option needs to be True in the 'test' mode.
+START: 0 # Start iterations. This is also used in designating an trained-iteration of a loaded model.
+LOAD_MODEL: False # Set true if model parameters are not trained from scratch.
+MODE: train # Set 'train' or 'test'. Note that LOAD_MODEL option needs to be True in the 'test' mode.
 
 FOR_TEST:
   blank_img: /home/quinn/datasets/blank.jpg
   save_dir: /home/quinn/Documents/models/GDWCT/cat2dog/test_results
+

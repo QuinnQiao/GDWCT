@@ -1,5 +1,6 @@
 */**/__pycache__
 *.pyc
 
-nohup.out
-train_results
+*.log
+train_results/
+test_results/

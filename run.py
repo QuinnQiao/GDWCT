@@ -132,14 +132,14 @@ class Run(object):
 
     def load_pretrained_model(self, iteration):
         self.G_A.load_state_dict(torch.load(os.path.join(
-            self.config['MODEL_SAVE_PATH'], 'G_A_%s_%d.pth' % (self.config['SAVE_NAME'], iteration))))
+            self.config['MODEL_SAVE_PATH'], 'G_A_%s_%d.pth' % (self.config['SAVE_NAME'], iteration)), map_location=self.device))
         self.G_B.load_state_dict(torch.load(os.path.join(
-            self.config['MODEL_SAVE_PATH'], 'G_B_%s_%d.pth' % (self.config['SAVE_NAME'], iteration))))
+            self.config['MODEL_SAVE_PATH'], 'G_B_%s_%d.pth' % (self.config['SAVE_NAME'], iteration)), map_location=self.device))
         if self.config['MODE'] == 'train':
             self.D_A.load_state_dict(torch.load(os.path.join(
-                self.config['MODEL_SAVE_PATH'], 'D_A_%s_%d.pth' % (self.config['SAVE_NAME'], iteration))))
+                self.config['MODEL_SAVE_PATH'], 'D_A_%s_%d.pth' % (self.config['SAVE_NAME'], iteration)), map_location=self.device))
             self.D_B.load_state_dict(torch.load(os.path.join(
-                self.config['MODEL_SAVE_PATH'], 'D_B_%s_%d.pth' % (self.config['SAVE_NAME'], iteration))))
+                self.config['MODEL_SAVE_PATH'], 'D_B_%s_%d.pth' % (self.config['SAVE_NAME'], iteration)), map_location=self.device))
 
     def update_learning_rate(self):
         if self.G_scheduler is not None:
@@ -307,14 +307,14 @@ class Run(object):
             self.update_G(x_A, x_B)
 
         ### ETC ###
-            if i % self.config['SAVE_EVERY'] == 0:
+            if (i+1) % self.config['SAVE_EVERY'] == 0:
 
                 elapsed = time.time() - start_time
                 elapsed = str(datetime.timedelta(seconds=elapsed))
 
                 print('=====================================================')
                 print("Elapsed [{}], Iter [{}/{}]".format(
-                    elapsed, i, self.config['NUM_ITERS']))
+                    elapsed, (i+1), self.config['NUM_ITERS']))
                 print('=====================================================')
                 print('D/loss: %.5f' % (self.loss['D/loss']))
                 print('G/loss_fake: %.5f' % (self.loss['G/loss_fake']))
@@ -325,10 +325,10 @@ class Run(object):
                 print('G/loss_whitening_reg: %.5f' % (self.loss['G/loss_whitening_reg']))
                 print('G/loss_coloring_reg: %.5f' % (self.loss['G/loss_coloring_reg']))
                 
-                save_img([x_A, x_AB, x_B, x_BA], self.config['SAVE_NAME'], i, 'train_results')
-                self.model_save(i)
+                save_img([x_A, x_AB, x_B, x_BA], self.config['SAVE_NAME'], i+1, 'train_results')
+                self.model_save(i+1)
 
-            if i > self.config['NUM_ITERS_DECAY']:
+            if (i+1) >= self.config['NUM_ITERS_DECAY']:
                 self.update_learning_rate()
 
 
@@ -345,7 +345,7 @@ class Run(object):
                 x_B = x_B.to(self.device)
 
                 x_AB, x_BA = self.update_G(x_A, x_B, isTrain=False)
-                save_img([x_A, x_B, x_AB, x_BA], self.config['SAVE_NAME'], i, 'test_results')
+                save_img([x_A, x_B, x_AB, x_BA], self.config['SAVE_NAME'], i+1, 'test_results')
 
     def test_new(self, mode):
         print('New test start')
@@ -409,9 +409,9 @@ def main():
     if config['MODE'] == 'train':
         run.train()
     else:
-        # run.test()
-        run.test_new('A2B')
-        run.test_new('B2A')
+        run.test()
+        # run.test_new('A2B')
+        # run.test_new('B2A')
 
 config = ges_Aonfig(sys.argv[1])
 
