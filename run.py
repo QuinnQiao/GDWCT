@@ -161,6 +161,19 @@ class Run(object):
         for gdwct in G.decoder.gdwct_modules:
             gdwct.alpha.data.clamp_(0,1)
 
+    def get_latent(self, x, domain='A'):
+        if domain == 'A':
+            G = self.G_A.module if self.config['DATA_PARALLEL'] else self.G_A
+        else:
+            G = self.G_B.module if self.config['DATA_PARALLEL'] else self.G_B
+
+        self.clamping_alpha(G)
+
+        c = G.c_encoder(x)
+        s = G.s_encoder(x, debug=True)
+
+        return c, s
+
     def update_G(self, x_A, x_B, isTrain=True):
         G_A = self.G_A.module if self.config['DATA_PARALLEL'] else self.G_A
         G_B = self.G_B.module if self.config['DATA_PARALLEL'] else self.G_B
@@ -392,6 +405,69 @@ class Run(object):
                 imgs.append(img)
         self.save_img_new(self.config['FOR_TEST']['save_dir'], mode+'.jpg', imgs, style.size(0)+1)
 
+    def debug(self):
+        print('Debug start (visualize content and style)')
+        self.test_ready()
+
+        data_loader = self.data_loader
+
+        for i, (x_A, x_B) in enumerate(data_loader):
+
+            x_A = x_A.to(self.device)
+            x_B = x_B.to(self.device)
+            break
+        
+        c_A, s_A = self.get_latent(x_A, 'A')
+        c_B, s_B = self.get_latent(x_B, 'B')
+
+        self.vis_mask(x_A, c_A, s_A, 'A')
+        self.vis_mask(x_B, c_B, s_B, 'B')
+
+    def vis_mask(self, imgs, content, style, domain='A'):
+        plt.figure(figsize=(12,6))
+        num_imgs = imgs.size(0)
+        num_plot = 5
+        index_c = np.random.permutation(content.size(1))
+        index_s = np.random.permutation(style.size(1))
+
+        for i in range(num_imgs):
+            img = imgs[i].cpu().numpy()
+            c = content[i].cpu().numpy()
+            s = style[i].cpu().numpy()
+            img = np.transpose(img, (1,2,0))
+            
+            sub_id = i*(num_plot*2+1)+1
+            plt.subplot(num_imgs, num_plot*2+1, sub_id)
+            plt.imshow(img)
+            plt.axis('off')
+            plt.title('input')
+            
+            index_c = np.random.permutation(index_c)
+            for j in range(num_plot):
+                k = index_c[j]
+                plt.subplot(num_imgs, num_plot*2+1, sub_id+j+1)
+                tc = c[k, :, :]
+                min_c = np.min(tc)
+                max_c = np.max(tc)
+                tc = (tc-min_c) / (max_c-min_c+1e-5)
+                plt.imshow(tc)
+                plt.axis('off')
+                plt.title('c-%d'%k)
+
+            index_s = np.random.permutation(index_s)
+            for j in range(num_plot):
+                k = index_s[j]
+                plt.subplot(num_imgs, num_plot*2+1, sub_id+num_plot+j+1)
+                ts = s[k, :, :]
+                min_s = np.min(ts)
+                max_s = np.max(ts)
+                ts = (ts-min_s) / (max_s-min_s+1e-5)
+                plt.imshow(ts)
+                plt.axis('off')
+                plt.title('s-%d'%k)
+
+        plt.savefig(os.path.join(self.config['FOR_DEBUG']['save_dir'], mode+'_latent.jpg'))
+
     def save_img_new(self, save_dir, save_name, images, num_input):
         image_tensor = torch.cat(images, 0)
         image_grid = vutils.make_grid(image_tensor.data, nrow=num_input, padding=0, normalize=True)
@@ -400,19 +476,26 @@ class Run(object):
         vutils.save_image(image_grid, os.path.join(save_dir, save_name), nrow=1)
         
 
-def main():
+def main(config):
     
     # For fast training
     cudnn.benchmark = True
 
-    run = Run(config)
-    if config['MODE'] == 'train':
+    mode = config['MODE']
+    if mode == 'train':
+        run = Run(config)
         run.train()
+    elif mode == 'debug':
+        config['MODE'] = config['mode4loader']
+        run = Run(config)
+        run.debug()
     else:
+        config['MODE'] = config['mode4loader']
+        run = Run(config)
         run.test()
         # run.test_new('A2B')
         # run.test_new('B2A')
 
 config = ges_Aonfig(sys.argv[1])
 
-main()
+main(config)

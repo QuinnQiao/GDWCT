@@ -49,7 +49,10 @@ class Style_Encoder(nn.Module):
         self.main = nn.Sequential(*layers)
         self.curr_dim = curr_dim
 
-    def forward(self, x):
+    def forward(self, x, debug=False):
+        if debug:
+            ft = self.main[:-1]
+            return ft(x)
         return self.main(x)
 
 
