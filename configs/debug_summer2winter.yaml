@@ -8,7 +8,7 @@ N_GROUP: 8 # The number of groups
 INPUT_DIM: 3
 DATA_PATH: /home/quinn/datasets/ # datasets/
 DATASET: summer2winter_yosemite # ukiyoe2photo # The name of a dataset located in DATA_PATH, 
-RESIZE: 286 # 216
+RESIZE: 256 # 216
 CROP_SIZE: 256 # 216
 
 # TRAINING SETTINGS
@@ -63,7 +63,7 @@ mode4loader: valid
 
 FOR_TEST:
   blank_img: /home/quinn/datasets/blank.jpg
-  save_dir: /home/quinn/Documents/models/GDWCT/summer2winter/test_results
+  save_dir: /home/quinn/Documents/models/GDWCT/summer2winter_new/test_results
   
 FOR_DEBUG:
-  save_dir: /home/quinn/Documents/models/GDWCT/summer2winter/debug
+  save_dir: /home/quinn/Documents/models/GDWCT/summer2winter_new/debug

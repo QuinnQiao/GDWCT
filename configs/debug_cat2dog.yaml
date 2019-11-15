@@ -63,7 +63,7 @@ mode4loader: valid
 
 FOR_TEST:
   blank_img: /home/quinn/datasets/blank.jpg
-  save_dir: /home/quinn/Documents/models/GDWCT/cat2dog/test_results
+  save_dir: /home/quinn/Documents/models/GDWCT/cat2dog_new/test_results
 
 FOR_DEBUG:
-  save_dir: /home/quinn/Documents/models/GDWCT/cat2dog/debug
+  save_dir: /home/quinn/Documents/models/GDWCT/cat2dog_new/debug

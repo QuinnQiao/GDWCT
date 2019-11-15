@@ -417,8 +417,9 @@ class Run(object):
             x_B = x_B.to(self.device)
             break
         
-        c_A, s_A = self.get_latent(x_A, 'A')
-        c_B, s_B = self.get_latent(x_B, 'B')
+        with torch.no_grad():
+            c_A, s_A = self.get_latent(x_A, 'A')
+            c_B, s_B = self.get_latent(x_B, 'B')
 
         self.vis_mask(x_A, c_A, s_A, 'A')
         self.vis_mask(x_B, c_B, s_B, 'B')
@@ -431,7 +432,7 @@ class Run(object):
         index_s = np.random.permutation(style.size(1))
 
         for i in range(num_imgs):
-            img = imgs[i].cpu().numpy()
+            img = (imgs[i].cpu().numpy()+1) / 2
             c = content[i].cpu().numpy()
             s = style[i].cpu().numpy()
             img = np.transpose(img, (1,2,0))
@@ -466,7 +467,15 @@ class Run(object):
                 plt.axis('off')
                 plt.title('s-%d'%k)
 
-        plt.savefig(os.path.join(self.config['FOR_DEBUG']['save_dir'], mode+'_latent.jpg'))
+            cnt = 0
+            for j in range(s.shape[0]):
+                if np.sum(s[j, :, :]) == 0:
+                    cnt += 1
+            print("zero: %d / %d" % (cnt, s.shape[0]))
+
+        if not os.path.exists(self.config['FOR_DEBUG']['save_dir']):
+            os.makedirs(self.config['FOR_DEBUG']['save_dir'])
+        plt.savefig(os.path.join(self.config['FOR_DEBUG']['save_dir'], domain+'_latent.jpg'))
 
     def save_img_new(self, save_dir, save_name, images, num_input):
         image_tensor = torch.cat(images, 0)
@@ -492,9 +501,9 @@ def main(config):
     else:
         config['MODE'] = config['mode4loader']
         run = Run(config)
-        run.test()
-        # run.test_new('A2B')
-        # run.test_new('B2A')
+        # run.test()
+        run.test_new('A2B')
+        run.test_new('B2A')
 
 config = ges_Aonfig(sys.argv[1])
 
