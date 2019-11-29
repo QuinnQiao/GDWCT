@@ -8,7 +8,7 @@ N_GROUP: 8 # The number of groups
 INPUT_DIM: 3
 DATA_PATH: /home/quinn/datasets/ # datasets/
 DATASET: cat2dog # ukiyoe2photo # The name of a dataset located in DATA_PATH, 
-RESIZE: 176 # 216
+RESIZE: 196 # 216
 CROP_SIZE: 176 # 216
 
 # TRAINING SETTINGS
@@ -51,9 +51,9 @@ D:
 
 # ETC
 NUM_WORKERS: 0
-SAVE_NAME: cat2dog_G8_new # ukiyoe2photo_G8
+SAVE_NAME: cat2dog_G8_NEW # ukiyoe2photo_G8
 SAVE_EVERY: 10000
-MODEL_SAVE_PATH: /home/quinn/Documents/models/GDWCT/cat2dog_new # models/
+MODEL_SAVE_PATH: /home/quinn/Documents/models/GDWCT/cat2dog_NEW # models/
 
 ### Required to be altered when MODE is changed.
 START: 0 # Start iterations. This is also used in designating an trained-iteration of a loaded model.
@@ -62,5 +62,5 @@ MODE: train # Set 'train' or 'test'. Note that LOAD_MODEL option needs to be Tru
 
 FOR_TEST:
   blank_img: /home/quinn/datasets/blank.jpg
-  save_dir: /home/quinn/Documents/models/GDWCT/cat2dog_new/test_results
+  save_dir: /home/quinn/Documents/models/GDWCT/cat2dog_NEW/test_results
 
