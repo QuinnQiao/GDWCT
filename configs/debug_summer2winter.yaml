@@ -8,7 +8,7 @@ N_GROUP: 8 # The number of groups
 INPUT_DIM: 3
 DATA_PATH: /home/quinn/datasets/ # datasets/
 DATASET: summer2winter_yosemite # ukiyoe2photo # The name of a dataset located in DATA_PATH, 
-RESIZE: 256 # 216
+RESIZE: 286 # 216
 CROP_SIZE: 256 # 216
 
 # TRAINING SETTINGS
@@ -58,7 +58,7 @@ MODEL_SAVE_PATH: /home/quinn/Documents/models/GDWCT/summer2winter_new # models/
 ### Required to be altered when MODE is changed.
 START: 200000 # Start iterations. This is also used in designating an trained-iteration of a loaded model.
 LOAD_MODEL: True # Set true if model parameters are not trained from scratch.
-MODE: debug # Set 'train' or 'test'. Note that LOAD_MODEL option needs to be True in the 'test' mode.
+MODE: test # Set 'train' or 'test'. Note that LOAD_MODEL option needs to be True in the 'test' mode.
 mode4loader: valid
 
 FOR_TEST:

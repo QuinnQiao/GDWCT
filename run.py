@@ -365,7 +365,7 @@ class Run(object):
         self.test_ready()
 
         blank_img = Image.open(self.config['FOR_TEST']['blank_img'])
-        blank_img = blank_img.resize((self.config['RESIZE'], self.config['RESIZE']))
+        blank_img = blank_img.resize((self.config['CROP_SIZE'], self.config['CROP_SIZE']))
         to_tensor = T.ToTensor()
         blank_img = to_tensor(blank_img).unsqueeze(0)
 

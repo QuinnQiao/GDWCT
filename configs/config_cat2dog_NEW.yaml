@@ -13,7 +13,7 @@ CROP_SIZE: 176 # 216
 
 # TRAINING SETTINGS
 NUM_ITERS: 200000 # Artworks dataset: 200000 / CelebA dataset: 500000
-BATCH_SIZE: 2
+BATCH_SIZE: 5
 G_LR: 0.0001
 D_LR: 0.0001
 BETA1: 0.5
@@ -56,9 +56,10 @@ SAVE_EVERY: 10000
 MODEL_SAVE_PATH: /home/quinn/Documents/models/GDWCT/cat2dog_NEW # models/
 
 ### Required to be altered when MODE is changed.
-START: 0 # Start iterations. This is also used in designating an trained-iteration of a loaded model.
-LOAD_MODEL: False # Set true if model parameters are not trained from scratch.
-MODE: train # Set 'train' or 'test'. Note that LOAD_MODEL option needs to be True in the 'test' mode.
+START: 200000 # Start iterations. This is also used in designating an trained-iteration of a loaded model.
+LOAD_MODEL: True # Set true if model parameters are not trained from scratch.
+MODE: test # Set 'train' or 'test'. Note that LOAD_MODEL option needs to be True in the 'test' mode.
+mode4loader: valid
 
 FOR_TEST:
   blank_img: /home/quinn/datasets/blank.jpg
